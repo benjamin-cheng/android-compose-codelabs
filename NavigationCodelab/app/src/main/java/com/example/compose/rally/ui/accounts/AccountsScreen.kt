@@ -16,6 +16,7 @@
 
 package com.example.compose.rally.ui.accounts
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -23,6 +24,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.compose.rally.R
 import com.example.compose.rally.data.UserData
 import com.example.compose.rally.ui.components.AccountRow
@@ -32,7 +35,9 @@ import com.example.compose.rally.ui.components.StatementBody
  * The Accounts screen.
  */
 @Composable
+@Suppress
 fun AccountsScreen(
+    @Suppress("UNUSED_PARAMETER") viewModel: AccountsScreenViewModel = viewModel(),
     onAccountClick: (String) -> Unit = {},
 ) {
     val amountsTotal = remember { UserData.accounts.map { account -> account.balance }.sum() }
@@ -62,6 +67,7 @@ fun AccountsScreen(
  */
 @Composable
 fun SingleAccountScreen(
+    @Suppress("UNUSED_PARAMETER") viewModel: SingleAccountScreenViewModel = viewModel(),
     accountType: String? = UserData.accounts.first().name
 ) {
     val account = remember(accountType) { UserData.getAccount(accountType) }
@@ -78,5 +84,19 @@ fun SingleAccountScreen(
             amount = row.balance,
             color = row.color
         )
+    }
+}
+
+class AccountsScreenViewModel : ViewModel() {
+    override fun onCleared() {
+        Log.d("AccountsScreenViewModel", "onCleared")
+        super.onCleared()
+    }
+}
+
+class SingleAccountScreenViewModel : ViewModel() {
+    override fun onCleared() {
+        Log.d("SingleAccountScreenViewModel", "onCleared")
+        super.onCleared()
     }
 }

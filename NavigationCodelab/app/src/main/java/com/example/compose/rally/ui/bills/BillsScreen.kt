@@ -16,12 +16,15 @@
 
 package com.example.compose.rally.ui.bills
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.compose.rally.R
 import com.example.compose.rally.data.Bill
 import com.example.compose.rally.data.UserData
@@ -33,6 +36,7 @@ import com.example.compose.rally.ui.components.StatementBody
  */
 @Composable
 fun BillsScreen(
+    @Suppress("UNUSED_PARAMETER") viewModel: BillsScreenViewModel = viewModel(),
     bills: List<Bill> = remember { UserData.bills }
 ) {
     StatementBody(
@@ -46,4 +50,11 @@ fun BillsScreen(
             BillRow(bill.name, bill.due, bill.amount, bill.color)
         }
     )
+}
+
+class BillsScreenViewModel : ViewModel() {
+    override fun onCleared() {
+        Log.d("BillsScreenViewModel", "onCleared")
+        super.onCleared()
+    }
 }

@@ -16,6 +16,7 @@
 
 package com.example.compose.rally.ui.overview
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -49,6 +50,8 @@ import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.compose.rally.R
 import com.example.compose.rally.data.UserData
 import com.example.compose.rally.ui.components.AccountRow
@@ -60,6 +63,7 @@ import java.util.Locale
 
 @Composable
 fun OverviewScreen(
+    @Suppress("UNUSED_PARAMETER") viewModel: OverviewScreenViewModel = viewModel(),
     onClickSeeAllAccounts: () -> Unit = {},
     onClickSeeAllBills: () -> Unit = {},
     onAccountClick: (String) -> Unit = {},
@@ -283,3 +287,10 @@ private fun SeeAllButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
 private val RallyDefaultPadding = 12.dp
 
 private const val SHOWN_ITEMS = 3
+
+class OverviewScreenViewModel : ViewModel() {
+    override fun onCleared() {
+        Log.d("OverviewScreenViewModel", "onCleared")
+        super.onCleared()
+    }
+}
